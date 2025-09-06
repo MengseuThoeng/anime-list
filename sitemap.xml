@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://animelisting.com/</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Popular Anime Section -->
+    <url>
+        <loc>https://animelisting.com/#popular</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Genres Section -->
+    <url>
+        <loc>https://animelisting.com/#genres</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Reviews Section -->
+    <url>
+        <loc>https://animelisting.com/#reviews</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Contact Section -->
+    <url>
+        <loc>https://animelisting.com/#contact</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Individual Anime Pages (Dynamic URLs) -->
+    <url>
+        <loc>https://animelisting.com/anime/attack-on-titan</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/attack-on-titan.jpg</image:loc>
+            <image:title>Attack on Titan</image:title>
+            <image:caption>Humanity fights for survival against giant humanoid Titans.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/anime/your-name</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/your-name.jpg</image:loc>
+            <image:title>Your Name</image:title>
+            <image:caption>Two teenagers share a profound, magical connection.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/anime/one-piece</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/one-piece.jpg</image:loc>
+            <image:title>One Piece</image:title>
+            <image:caption>A young pirate searches for the ultimate treasure.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/anime/spirited-away</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/spirited-away.jpg</image:loc>
+            <image:title>Spirited Away</image:title>
+            <image:caption>A girl enters a world ruled by gods and witches.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/anime/death-note</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/death-note.jpg</image:loc>
+            <image:title>Death Note</image:title>
+            <image:caption>A student discovers a supernatural notebook.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/anime/my-hero-academia</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://animelisting.com/images/my-hero-academia.jpg</image:loc>
+            <image:title>My Hero Academia</image:title>
+            <image:caption>In a world of superheroes, a boy dreams of becoming one.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Genre Pages -->
+    <url>
+        <loc>https://animelisting.com/genre/action</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/genre/romance</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/genre/comedy</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/genre/drama</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/genre/fantasy</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/genre/sci-fi</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+
+    <!-- Static Pages -->
+    <url>
+        <loc>https://animelisting.com/about</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/privacy</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/terms</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <mobile:mobile/>
+    </url>
+
+    <url>
+        <loc>https://animelisting.com/help</loc>
+        <lastmod>2025-09-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <mobile:mobile/>
+    </url>
+
+</urlset>

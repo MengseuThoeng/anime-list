@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Standard Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Discover the best anime series and movies. Browse through our comprehensive anime listing with detailed information, ratings, and reviews.">
+    <meta name="keywords" content="anime, manga, anime list, anime series, anime movies, otaku, japanese animation, anime reviews, anime ratings">
+    <meta name="author" content="Anime Listing">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Anime Listing - Discover Amazing Anime Series & Movies">
+    <meta property="og:description" content="Explore our comprehensive collection of anime series and movies with detailed information, ratings, and reviews. Find your next favorite anime!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://animelisting.com">
+    <meta property="og:image" content="https://animelisting.com/images/og-anime-banner.jpg">
+    <meta property="og:image:alt" content="Anime Listing - Best Anime Collection">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Anime Listing">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@animelisting">
+    <meta name="twitter:creator" content="@animelisting">
+    <meta name="twitter:title" content="Anime Listing - Discover Amazing Anime Series & Movies">
+    <meta name="twitter:description" content="Explore our comprehensive collection of anime series and movies with detailed information, ratings, and reviews.">
+    <meta name="twitter:image" content="https://animelisting.com/images/twitter-anime-banner.jpg">
+    <meta name="twitter:image:alt" content="Anime Listing Platform">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#1f2937">
+    <meta name="msapplication-TileColor" content="#1f2937">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Anime Listing">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://animelisting.com">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <title>Anime Listing - Discover Amazing Anime Series & Movies</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anime-primary': '#ff6b6b',
+                        'anime-secondary': '#4ecdc4',
+                        'anime-dark': '#1a1a2e',
+                        'anime-light': '#eee',
+                    },
+                    fontFamily: {
+                        'anime': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 font-anime">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-anime-primary">
+                            <i class="fas fa-tv mr-2"></i>AnimeList
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-900 hover:text-anime-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#popular" class="text-gray-500 hover:text-anime-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Popular</a>
+                        <a href="#genres" class="text-gray-500 hover:text-anime-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Genres</a>
+                        <a href="#reviews" class="text-gray-500 hover:text-anime-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Reviews</a>
+                        <a href="#contact" class="text-gray-500 hover:text-anime-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Search anime..." class="bg-gray-100 text-gray-900 rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-anime-primary">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-anime-primary p-2 rounded-md">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="#home" class="text-gray-900 hover:text-anime-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#popular" class="text-gray-500 hover:text-anime-primary block px-3 py-2 rounded-md text-base font-medium">Popular</a>
+                <a href="#genres" class="text-gray-500 hover:text-anime-primary block px-3 py-2 rounded-md text-base font-medium">Genres</a>
+                <a href="#reviews" class="text-gray-500 hover:text-anime-primary block px-3 py-2 rounded-md text-base font-medium">Reviews</a>
+                <a href="#contact" class="text-gray-500 hover:text-anime-primary block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <div class="px-3 py-2">
+                    <input type="text" placeholder="Search anime..." class="w-full bg-gray-100 text-gray-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-anime-primary">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Discover Amazing <span class="text-anime-secondary">Anime</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                    Explore thousands of anime series and movies with detailed reviews and ratings
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-anime-primary hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                        <i class="fas fa-play mr-2"></i>Start Watching
+                    </button>
+                    <button class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                        <i class="fas fa-list mr-2"></i>Browse Collection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-tv text-4xl text-anime-primary mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900" id="animeCount">1,500+</h3>
+                    <p class="text-gray-600">Anime Series</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-film text-4xl text-anime-secondary mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900" id="movieCount">800+</h3>
+                    <p class="text-gray-600">Anime Movies</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-users text-4xl text-anime-primary mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900" id="userCount">50K+</h3>
+                    <p class="text-gray-600">Active Users</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <i class="fas fa-star text-4xl text-anime-secondary mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900" id="reviewCount">25K+</h3>
+                    <p class="text-gray-600">User Reviews</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Anime Section -->
+    <section id="popular" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Popular Anime</h2>
+                <p class="text-xl text-gray-600">Most watched and highest rated anime series</p>
+            </div>
+            
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="filter-btn bg-anime-primary text-white px-6 py-2 rounded-lg font-medium transition-colors" data-filter="all">All</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-anime-primary hover:text-white px-6 py-2 rounded-lg font-medium transition-colors" data-filter="action">Action</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-anime-primary hover:text-white px-6 py-2 rounded-lg font-medium transition-colors" data-filter="romance">Romance</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-anime-primary hover:text-white px-6 py-2 rounded-lg font-medium transition-colors" data-filter="comedy">Comedy</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-anime-primary hover:text-white px-6 py-2 rounded-lg font-medium transition-colors" data-filter="drama">Drama</button>
+            </div>
+            
+            <!-- Anime Grid -->
+            <div id="animeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Anime cards will be populated by JavaScript -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="loadMore" class="bg-anime-primary hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Load More Anime
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genres Section -->
+    <section id="genres" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Browse by Genre</h2>
+                <p class="text-xl text-gray-600">Find anime that matches your taste</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="genre-card bg-gradient-to-br from-red-400 to-red-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-fist-raised text-3xl mb-3"></i>
+                    <h3 class="font-bold">Action</h3>
+                    <p class="text-sm opacity-90">450+ anime</p>
+                </div>
+                <div class="genre-card bg-gradient-to-br from-pink-400 to-pink-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-heart text-3xl mb-3"></i>
+                    <h3 class="font-bold">Romance</h3>
+                    <p class="text-sm opacity-90">320+ anime</p>
+                </div>
+                <div class="genre-card bg-gradient-to-br from-yellow-400 to-yellow-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-laugh text-3xl mb-3"></i>
+                    <h3 class="font-bold">Comedy</h3>
+                    <p class="text-sm opacity-90">280+ anime</p>
+                </div>
+                <div class="genre-card bg-gradient-to-br from-blue-400 to-blue-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-mask text-3xl mb-3"></i>
+                    <h3 class="font-bold">Drama</h3>
+                    <p class="text-sm opacity-90">390+ anime</p>
+                </div>
+                <div class="genre-card bg-gradient-to-br from-purple-400 to-purple-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-magic text-3xl mb-3"></i>
+                    <h3 class="font-bold">Fantasy</h3>
+                    <p class="text-sm opacity-90">310+ anime</p>
+                </div>
+                <div class="genre-card bg-gradient-to-br from-green-400 to-green-600 text-white p-6 rounded-lg text-center cursor-pointer transform hover:scale-105 transition-all">
+                    <i class="fas fa-rocket text-3xl mb-3"></i>
+                    <h3 class="font-bold">Sci-Fi</h3>
+                    <p class="text-sm opacity-90">180+ anime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Users Say</h2>
+                <p class="text-xl text-gray-600">Real reviews from our anime community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face&auto=format" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Akira_Fan</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Best anime database I've ever used! The recommendations are spot on and the interface is incredibly smooth."</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b789?w=50&h=50&fit=crop&crop=face&auto=format" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">NarutoLover</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Found so many hidden gems through this platform. The detailed reviews really help in choosing what to watch next!"</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face&auto=format" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">OnePieceQueen</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"The community here is amazing! Great discussions and the rating system really helps discover quality anime."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-anime-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Stay Updated</h2>
+            <p class="text-xl mb-8 text-gray-300">Get notified about new anime releases and trending series</p>
+            
+            <div class="max-w-md mx-auto">
+                <div class="flex gap-4">
+                    <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-anime-primary">
+                    <button class="bg-anime-primary hover:bg-red-600 text-white font-bold px-8 py-3 rounded-lg transition-colors">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-anime-primary mb-4">
+                        <i class="fas fa-tv mr-2"></i>AnimeList
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your ultimate destination for discovering and tracking anime series and movies.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-anime-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-anime-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-anime-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-anime-primary transition-colors">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Popular Anime</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">New Releases</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Top Rated</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Genres</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p><i class="fas fa-envelope mr-2"></i>info@animelisting.com</p>
+                        <p><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>123 Anime Street, Tokyo, Japan</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 AnimeList. All rights reserved. Made with ❤️ for anime lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 bg-anime-primary hover:bg-red-600 text-white p-3 rounded-full shadow-lg hidden transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-anime-primary mx-auto mb-4"></div>
+            <p class="text-gray-900 font-medium">Loading anime...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

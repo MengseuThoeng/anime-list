@@ -1,0 +1,67 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://animelisting.com/sitemap.xml
+
+# Disallow certain paths
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /*.log$
+Disallow: /api/
+
+# Allow specific crawlers
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Image crawlers
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Mobile crawlers
+User-agent: Googlebot-Mobile
+Allow: /
+
+# News crawlers
+User-agent: Googlebot-News
+Allow: /news/
+Allow: /articles/
+
+# Academic crawlers
+User-agent: ia_archiver
+Allow: /
+
+# Block bad bots
+User-agent: BadBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Cache directives
+Cache-Control: public, max-age=86400
+
+# Host directive
+Host: https://animelisting.com

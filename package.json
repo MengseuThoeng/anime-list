@@ -1,0 +1,58 @@
+{
+  "name": "anime-listing-website",
+  "version": "1.0.0",
+  "description": "A modern anime listing website built with HTML, JavaScript, and Tailwind CSS",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=8080 --open=/index.html",
+    "dev": "live-server --port=3000 --watch --open=/index.html",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified'",
+    "deploy": "echo 'Ready for deployment'",
+    "lint": "echo 'Linting HTML, CSS, and JS files'"
+  },
+  "keywords": [
+    "anime",
+    "listing",
+    "website",
+    "html",
+    "css",
+    "javascript",
+    "tailwind",
+    "responsive",
+    "pwa",
+    "seo"
+  ],
+  "author": {
+    "name": "Anime Listing Team",
+    "email": "info@animelisting.com",
+    "url": "https://animelisting.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/anime-listing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/anime-listing/issues"
+  },
+  "homepage": "https://animelisting.com",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "eslint": "^8.0.0",
+    "prettier": "^2.8.0",
+    "stylelint": "^15.0.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "private": false
+}
