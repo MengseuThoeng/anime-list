@@ -1,0 +1,134 @@
+# Production Docker Compose Configuration
+version: '3.8'
+
+services:
+  # Anime Listing Web Application
+  anime-listing-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anime-listing-web-prod
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - nginx-logs:/var/log/nginx
+      - ./ssl:/etc/nginx/ssl:ro
+    environment:
+      - NGINX_HOST=animelisting.com
+      - NGINX_PORT=80
+      - NODE_ENV=production
+    networks:
+      - anime-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.anime-listing.rule=Host(`animelisting.com`, `www.animelisting.com`)"
+      - "traefik.http.routers.anime-listing.entrypoints=websecure"
+      - "traefik.http.routers.anime-listing.tls.certresolver=letsencrypt"
+      - "traefik.http.services.anime-listing.loadbalancer.server.port=80"
+      # Redirect www to non-www
+      - "traefik.http.middlewares.www-redirect.redirectregex.regex=^https://www.animelisting.com/(.*)"
+      - "traefik.http.middlewares.www-redirect.redirectregex.replacement=https://animelisting.com/$${1}"
+      - "traefik.http.routers.anime-listing.middlewares=www-redirect"
+
+  # Traefik Reverse Proxy with SSL
+  traefik:
+    image: traefik:v2.10
+    container_name: anime-listing-traefik-prod
+    restart: always
+    command:
+      - "--api.dashboard=false"  # Disable dashboard in production
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=admin@animelisting.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--log.level=WARN"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-letsencrypt:/letsencrypt
+    networks:
+      - anime-network
+
+  # Monitoring Stack
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    container_name: anime-listing-nginx-exporter-prod
+    restart: always
+    command:
+      - -nginx.scrape-uri=http://anime-listing-web/nginx_status
+    depends_on:
+      - anime-listing-web
+    networks:
+      - anime-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: anime-listing-prometheus-prod
+    restart: always
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    networks:
+      - anime-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: anime-listing-grafana-prod
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-changeme123}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - anime-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`monitoring.animelisting.com`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+# Networks
+networks:
+  anime-network:
+    driver: bridge
+    name: anime-listing-network-prod
+
+# Volumes
+volumes:
+  nginx-logs:
+    name: anime-listing-nginx-logs-prod
+  traefik-letsencrypt:
+    name: anime-listing-traefik-certs-prod
+  prometheus-data:
+    name: anime-listing-prometheus-data-prod
+  grafana-data:
+    name: anime-listing-grafana-data-prod

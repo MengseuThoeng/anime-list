@@ -1,0 +1,138 @@
+version: '3.8'
+
+services:
+  # Anime Listing Web Application
+  anime-listing-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anime-listing-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Mount logs for monitoring
+      - nginx-logs:/var/log/nginx
+      # Mount for SSL certificates (if needed)
+      - ./ssl:/etc/nginx/ssl:ro
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    networks:
+      - anime-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.anime-listing.rule=Host(`animelisting.local`)"
+      - "traefik.http.routers.anime-listing.entrypoints=web"
+      - "traefik.http.services.anime-listing.loadbalancer.server.port=80"
+
+  # Optional: Reverse Proxy with Traefik (for production)
+  traefik:
+    image: traefik:v2.10
+    container_name: anime-listing-traefik
+    restart: unless-stopped
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=admin@animelisting.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "8080:8080"  # Traefik dashboard
+      - "8000:80"    # HTTP
+      - "8443:443"   # HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-letsencrypt:/letsencrypt
+    networks:
+      - anime-network
+    profiles:
+      - production
+
+  # Optional: Monitoring with Nginx Exporter
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    container_name: anime-listing-nginx-exporter
+    restart: unless-stopped
+    command:
+      - -nginx.scrape-uri=http://anime-listing-web/nginx_status
+    ports:
+      - "9113:9113"
+    depends_on:
+      - anime-listing-web
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+  # Optional: Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: anime-listing-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+  # Optional: Grafana for monitoring dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: anime-listing-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+# Networks
+networks:
+  anime-network:
+    driver: bridge
+    name: anime-listing-network
+
+# Volumes
+volumes:
+  nginx-logs:
+    name: anime-listing-nginx-logs
+  traefik-letsencrypt:
+    name: anime-listing-traefik-certs
+  prometheus-data:
+    name: anime-listing-prometheus-data
+  grafana-data:
+    name: anime-listing-grafana-data

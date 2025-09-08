@@ -1,0 +1,119 @@
+# Docker ignore file for Anime Listing Website
+# This file specifies which files and directories should be excluded from the Docker build context
+
+# Git files
+.git
+.gitignore
+.gitattributes
+.github/
+
+# Documentation
+README.md
+*.md
+docs/
+documentation/
+
+# Docker files (avoid recursive copying)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build outputs
+build/
+dist/
+out/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+
+# Temporary directories
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# SSL certificates (these should be mounted as volumes)
+ssl/
+certificates/
+*.pem
+*.key
+*.crt
+
+# Monitoring data (these are handled by volumes)
+monitoring/data/
+prometheus-data/
+grafana-data/
+
+# Scripts (deployment scripts don't need to be in container)
+deploy.sh
+scripts/
+
+# Configuration files that should be environment-specific
+nginx-custom.conf
+.htaccess
+
+# Archive files
+*.tar
+*.tar.gz
+*.zip
+*.rar
+
+# Large media files (these should be served from CDN)
+*.mp4
+*.avi
+*.mov
+*.wmv
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+.npm/
+.yarn/
