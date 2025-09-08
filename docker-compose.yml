@@ -9,8 +9,8 @@ services:
     container_name: anime-listing-web
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "8090:80"
+      - "8444:443"
     volumes:
       # Mount logs for monitoring
       - nginx-logs:/var/log/nginx
@@ -50,9 +50,9 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.email=admin@animelisting.com"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     ports:
-      - "8080:8080"  # Traefik dashboard
+      - "8081:8080"  # Traefik dashboard
       - "8000:80"    # HTTP
-      - "8443:443"   # HTTPS
+      - "8445:443"   # HTTPS
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik-letsencrypt:/letsencrypt
@@ -69,7 +69,7 @@ services:
     command:
       - -nginx.scrape-uri=http://anime-listing-web/nginx_status
     ports:
-      - "9113:9113"
+      - "9114:9113"
     depends_on:
       - anime-listing-web
     networks:
@@ -83,7 +83,7 @@ services:
     container_name: anime-listing-prometheus
     restart: unless-stopped
     ports:
-      - "9090:9090"
+      - "9091:9090"
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus-data:/prometheus
@@ -105,7 +105,7 @@ services:
     container_name: anime-listing-grafana
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin123
       - GF_USERS_ALLOW_SIGN_UP=false

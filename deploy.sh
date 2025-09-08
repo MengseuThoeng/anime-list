@@ -36,6 +36,16 @@ check_docker() {
     print_message $GREEN "Docker is installed and running."
 }
 
+# Function to check for port conflicts
+check_ports() {
+    print_message $BLUE "Checking for port conflicts..."
+    if [[ -f "check-ports.sh" ]]; then
+        chmod +x check-ports.sh
+        ./check-ports.sh
+    else
+        print_message $YELLOW "Port check script not found, proceeding with deployment..."
+    fi
+}
 # Function to check if Docker Compose is installed
 check_docker_compose() {
     print_message $BLUE "Checking Docker Compose installation..."
@@ -102,7 +112,7 @@ health_check() {
     print_message $BLUE "Running health checks..."
     
     # Check if web service is responding
-    if curl -f http://localhost:80 &> /dev/null; then
+    if curl -f http://localhost:8090 &> /dev/null; then
         print_message $GREEN "✓ Web service is healthy"
     else
         print_message $RED "✗ Web service is not responding"
@@ -110,7 +120,7 @@ health_check() {
     
     # Check if monitoring is enabled and running
     if docker-compose ps | grep -q "prometheus"; then
-        if curl -f http://localhost:9090 &> /dev/null; then
+        if curl -f http://localhost:9091 &> /dev/null; then
             print_message $GREEN "✓ Prometheus is healthy"
         else
             print_message $RED "✗ Prometheus is not responding"
@@ -118,7 +128,7 @@ health_check() {
     fi
     
     if docker-compose ps | grep -q "grafana"; then
-        if curl -f http://localhost:3000 &> /dev/null; then
+        if curl -f http://localhost:3001 &> /dev/null; then
             print_message $GREEN "✓ Grafana is healthy"
         else
             print_message $RED "✗ Grafana is not responding"
@@ -154,6 +164,7 @@ show_help() {
     echo "  status               Show service status"
     echo "  health               Run health checks"
     echo "  cleanup              Remove all containers and volumes"
+    echo "  check                Check system requirements and port conflicts"
     echo "  help                 Show this help message"
     echo ""
     echo "Examples:"
@@ -178,12 +189,13 @@ main() {
         "start")
             check_docker
             check_docker_compose
+            check_ports
             setup_env
             start_services ${2:-development}
             print_message $GREEN "\n🎌 Anime Listing Website is running!"
-            print_message $YELLOW "Website: http://localhost:80"
+            print_message $YELLOW "Website: http://localhost:8090"
             if [[ ${2:-development} == "development" ]]; then
-                print_message $YELLOW "Traefik Dashboard: http://localhost:8080"
+                print_message $YELLOW "Traefik Dashboard: http://localhost:8081"
             fi
             ;;
         "stop")
@@ -207,6 +219,11 @@ main() {
             ;;
         "monitoring")
             enable_monitoring
+            ;;
+        "check")
+            check_docker
+            check_docker_compose
+            check_ports
             ;;
         "help"|*)
             show_help

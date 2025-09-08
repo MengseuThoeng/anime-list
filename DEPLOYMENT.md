@@ -71,15 +71,15 @@ docker-compose up -d --build
 ```
 
 ### 3. Access the Application
-- **Website**: http://localhost:80
-- **Traefik Dashboard**: http://localhost:8080
+- **Website**: http://localhost:8090
+- **Traefik Dashboard**: http://localhost:8081
 
 ### 4. Enable Monitoring (Optional)
 ```bash
 ./deploy.sh monitoring
 ```
-- **Grafana**: http://localhost:3000 (admin/admin123)
-- **Prometheus**: http://localhost:9090
+- **Grafana**: http://localhost:3001 (admin/admin123)
+- **Prometheus**: http://localhost:9091
 
 ## ⚙️ Configuration
 
