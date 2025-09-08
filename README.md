@@ -443,7 +443,59 @@ Test different:
 
 ---
 
-## 📞 Support & Resources
+## � Deployment Guide
+
+### **Quick Start with Docker**
+
+```bash
+# Make the deploy script executable
+chmod +x deploy.sh
+
+# For development (with Traefik dashboard)
+./deploy.sh start dev
+
+# For production with domain and SSL
+./deploy.sh start prod
+
+# For production with IP only (no SSL/domain required)
+./deploy.sh start ip
+```
+
+### **Deployment Options:**
+
+#### 🏠 **Development Mode** (`dev`)
+- **URL**: http://localhost:8090
+- **Features**: Traefik dashboard, hot reload, debugging enabled
+- **Use case**: Local development and testing
+
+#### 🌐 **Production with Domain** (`prod`)  
+- **URL**: https://your-domain.com
+- **Features**: SSL/HTTPS, Let's Encrypt certificates, domain-based routing
+- **Requirements**: Valid domain name pointing to your server
+- **Configuration**: Edit `docker-compose.prod.yml` to set your domain
+
+#### 🎯 **Production with IP** (`ip`)
+- **URL**: http://YOUR_SERVER_IP:8090
+- **Features**: Production optimizations, no SSL complexity
+- **Use case**: When you only have an IP address (no domain)
+- **Perfect for**: VPS, dedicated servers, internal networks
+
+### **Server Requirements:**
+- Docker and Docker Compose installed
+- Ports 8090, 8081, 9091, 3001 available
+- 2GB RAM minimum, 4GB recommended
+
+### **Management Commands:**
+```bash
+./deploy.sh status    # Check service status
+./deploy.sh logs      # View application logs  
+./deploy.sh stop      # Stop all services
+./deploy.sh cleanup   # Remove all containers and data
+```
+
+---
+
+## �📞 Support & Resources
 
 ### **Official Documentation:**
 - [Open Graph Protocol](https://ogp.me/)
@@ -459,4 +511,4 @@ Test different:
 
 **Made with ❤️ for developers who care about SEO and social media optimization!**
 
-*Last updated: September 6, 2025*
+*Last updated: September 8, 2025*

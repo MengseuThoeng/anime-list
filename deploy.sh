@@ -50,8 +50,8 @@ check_ports() {
 check_docker_compose() {
     print_message $BLUE "Checking Docker Compose installation..."
     
-    if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
-        print_message $RED "Docker Compose is not installed. Please install Docker Compose first."
+    if ! docker compose version &> /dev/null; then
+        print_message $RED "Docker Compose is not available. Please install Docker with Compose plugin."
         exit 1
     fi
     
@@ -76,9 +76,11 @@ start_services() {
     print_message $BLUE "Starting Anime Listing Website in $environment mode..."
     
     if [[ $environment == "production" ]]; then
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+        docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+    elif [[ $environment == "ip" ]]; then
+        docker compose -f docker-compose.yml -f docker-compose.ip.yml up -d --build
     else
-        docker-compose up -d --build
+        docker compose up -d --build
     fi
     
     print_message $GREEN "Services started successfully!"
@@ -87,7 +89,7 @@ start_services() {
 # Function to stop services
 stop_services() {
     print_message $BLUE "Stopping services..."
-    docker-compose down
+    docker compose down
     print_message $GREEN "Services stopped."
 }
 
@@ -95,13 +97,13 @@ stop_services() {
 view_logs() {
     local service=${1:-anime-listing-web}
     print_message $BLUE "Viewing logs for $service..."
-    docker-compose logs -f $service
+    docker compose logs -f $service
 }
 
 # Function to show status
 show_status() {
     print_message $BLUE "Service Status:"
-    docker-compose ps
+    docker compose ps
     
     print_message $BLUE "\nContainer Health:"
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
@@ -119,7 +121,7 @@ health_check() {
     fi
     
     # Check if monitoring is enabled and running
-    if docker-compose ps | grep -q "prometheus"; then
+    if docker compose ps | grep -q "prometheus"; then
         if curl -f http://localhost:9091 &> /dev/null; then
             print_message $GREEN "✓ Prometheus is healthy"
         else
@@ -127,7 +129,7 @@ health_check() {
         fi
     fi
     
-    if docker-compose ps | grep -q "grafana"; then
+    if docker compose ps | grep -q "grafana"; then
         if curl -f http://localhost:3001 &> /dev/null; then
             print_message $GREEN "✓ Grafana is healthy"
         else
@@ -142,7 +144,7 @@ cleanup() {
     read -r response
     if [[ $response =~ ^[Yy]$ ]]; then
         print_message $BLUE "Cleaning up..."
-        docker-compose down -v --remove-orphans
+        docker compose down -v --remove-orphans
         docker system prune -f
         print_message $GREEN "Cleanup completed."
     else
@@ -157,9 +159,9 @@ show_help() {
     echo "Usage: $0 [COMMAND] [OPTIONS]"
     echo ""
     echo "Commands:"
-    echo "  start [dev|prod]     Start the application (default: dev)"
+    echo "  start [dev|prod|ip]  Start the application (default: dev)"
     echo "  stop                 Stop all services"
-    echo "  restart [dev|prod]   Restart the application"
+    echo "  restart [dev|prod|ip] Restart the application"
     echo "  logs [service]       View logs (default: anime-listing-web)"
     echo "  status               Show service status"
     echo "  health               Run health checks"
@@ -167,9 +169,15 @@ show_help() {
     echo "  check                Check system requirements and port conflicts"
     echo "  help                 Show this help message"
     echo ""
+    echo "Deployment Modes:"
+    echo "  dev                  Development mode with Traefik dashboard"
+    echo "  prod                 Production mode with SSL/domain (requires domain)"
+    echo "  ip                   Production mode for IP-only access (no SSL)"
+    echo ""
     echo "Examples:"
     echo "  $0 start dev         Start in development mode"
-    echo "  $0 start prod        Start in production mode"
+    echo "  $0 start prod        Start in production mode (requires domain)"
+    echo "  $0 start ip          Start for IP-only access (no domain needed)"
     echo "  $0 logs nginx        View nginx logs"
     echo "  $0 status            Show all service status"
 }
@@ -177,7 +185,7 @@ show_help() {
 # Function to enable monitoring
 enable_monitoring() {
     print_message $BLUE "Enabling monitoring stack..."
-    docker-compose --profile monitoring up -d
+    docker compose --profile monitoring up -d
     print_message $GREEN "Monitoring enabled!"
     print_message $YELLOW "Grafana: http://localhost:3000 (admin/admin123)"
     print_message $YELLOW "Prometheus: http://localhost:9090"
@@ -193,8 +201,14 @@ main() {
             setup_env
             start_services ${2:-development}
             print_message $GREEN "\n🎌 Anime Listing Website is running!"
-            print_message $YELLOW "Website: http://localhost:8090"
-            if [[ ${2:-development} == "development" ]]; then
+            if [[ ${2:-development} == "ip" ]]; then
+                print_message $YELLOW "Website: http://YOUR_SERVER_IP:8090"
+                print_message $YELLOW "Note: Replace YOUR_SERVER_IP with your actual server IP address"
+            elif [[ ${2:-development} == "production" ]]; then
+                print_message $YELLOW "Website: https://animelisting.com (configure domain in docker-compose.prod.yml)"
+                print_message $YELLOW "HTTP redirect: http://YOUR_SERVER_IP:8090 → https://animelisting.com"
+            else
+                print_message $YELLOW "Website: http://localhost:8090"
                 print_message $YELLOW "Traefik Dashboard: http://localhost:8081"
             fi
             ;;

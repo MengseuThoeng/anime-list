@@ -1,0 +1,97 @@
+# Production Docker Compose Configuration for IP-only deployment
+# Use this when you don't have a domain name - just an IP address
+version: '3.8'
+
+services:
+  # Anime Listing Web Application
+  anime-listing-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anime-listing-web-ip
+    restart: always
+    ports:
+      - "8090:80"  # Direct port mapping - access via http://YOUR_IP:8090
+    volumes:
+      - nginx-logs:/var/log/nginx
+    environment:
+      - NODE_ENV=production
+    networks:
+      - anime-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Monitoring Stack (Optional)
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    container_name: anime-listing-nginx-exporter-ip
+    restart: always
+    command:
+      - -nginx.scrape-uri=http://anime-listing-web/nginx_status
+    depends_on:
+      - anime-listing-web
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: anime-listing-prometheus-ip
+    restart: always
+    ports:
+      - "9091:9090"  # Access via http://YOUR_IP:9091
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: anime-listing-grafana-ip
+    restart: always
+    ports:
+      - "3001:3000"  # Access via http://YOUR_IP:3001
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin123}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SECURITY_DISABLE_GRAVATAR=true
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+      - GF_ANALYTICS_CHECK_FOR_UPDATES=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - anime-network
+    profiles:
+      - monitoring
+
+# Networks
+networks:
+  anime-network:
+    driver: bridge
+    name: anime-network-ip
+
+# Volumes for persistent data
+volumes:
+  nginx-logs:
+    name: anime-nginx-logs-ip
+  prometheus-data:
+    name: anime-prometheus-data-ip
+  grafana-data:
+    name: anime-grafana-data-ip
