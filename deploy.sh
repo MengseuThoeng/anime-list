@@ -202,8 +202,9 @@ main() {
             start_services ${2:-development}
             print_message $GREEN "\n🎌 Anime Listing Website is running!"
             if [[ ${2:-development} == "ip" ]]; then
-                print_message $YELLOW "Website: http://YOUR_SERVER_IP:8090"
-                print_message $YELLOW "Note: Replace YOUR_SERVER_IP with your actual server IP address"
+                print_message $YELLOW "🌐 Website: http://159.65.8.211:8091"
+                print_message $CYAN "📊 Prometheus: http://159.65.8.211:9092 (if monitoring enabled)"
+                print_message $CYAN "📈 Grafana: http://159.65.8.211:3002 (if monitoring enabled)"
             elif [[ ${2:-development} == "production" ]]; then
                 print_message $YELLOW "Website: https://animelisting.com (configure domain in docker-compose.prod.yml)"
                 print_message $YELLOW "HTTP redirect: http://YOUR_SERVER_IP:8090 → https://animelisting.com"

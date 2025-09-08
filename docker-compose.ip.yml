@@ -11,7 +11,7 @@ services:
     container_name: anime-listing-web-ip
     restart: always
     ports:
-      - "8090:80"  # Direct port mapping - access via http://YOUR_IP:8090
+      - "8091:80"  # Direct port mapping - access via http://159.65.8.211:8091
     volumes:
       - nginx-logs:/var/log/nginx
     environment:
@@ -44,7 +44,7 @@ services:
     container_name: anime-listing-prometheus-ip
     restart: always
     ports:
-      - "9091:9090"  # Access via http://YOUR_IP:9091
+      - "9092:9090"  # Access via http://159.65.8.211:9092
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus-data:/prometheus
@@ -63,7 +63,7 @@ services:
     container_name: anime-listing-grafana-ip
     restart: always
     ports:
-      - "3001:3000"  # Access via http://YOUR_IP:3001
+      - "3002:3000"  # Access via http://159.65.8.211:3002
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin123}
       - GF_USERS_ALLOW_SIGN_UP=false
